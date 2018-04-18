@@ -21,6 +21,7 @@ It's going to grow with the devices I'm gonna buy.
 	"user": "Your_MQTT_Username",
 	"password": "Your_MQTT_password",
 	"host": "Your_MQTT_host",
+	"ca_cert":"Path/To/Your/certificate (If you have one)",
 	"devices": [
 		{
 			"mac": "BTLE Mac",

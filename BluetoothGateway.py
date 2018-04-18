@@ -4,6 +4,7 @@ import json
 import BluetoothGateway.components.awox as awox
 import BluetoothGateway.components.xiaomiht as xiaomi
 import time
+import ssl
 
 class MainManager:
 
@@ -71,6 +72,9 @@ class MainManager:
         print("Connecting to " + self.config['host'])
         self.connexion = mqtt.Client("BluePy")
         self.connexion.username_pw_set(self.config['user'], self.config['password'])
+        if 'ca_cert' in self.config:
+            self.connexion.tls_set(ca_certs=self.config['ca_cert'], cert_reqs=ssl.VERIFY_DEFAULT)
+            print("MQTT Encryption is enabled ! Good boy :3")
         self.connexion.reconnect_delay_set()
         self.connexion.on_connect = self.on_connect
         self.connexion.on_message = self.on_message
