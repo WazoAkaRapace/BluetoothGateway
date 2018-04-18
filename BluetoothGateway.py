@@ -35,8 +35,8 @@ class MainManager:
             print("Channels have been re-subscribed")
 
     def on_message(self, client, userdata, message):
+        print("New message : " + message.topic + " [" + str(message.payload.decode("utf-8")) + "]")
         for device in self.deviceList:
-            print("New message : " + message.topic + " [" + str(message.payload.decode("utf-8")) + "]")
             device.on_message(message)
 
     def on_disconnect(self, client, userdata, rc):
@@ -73,7 +73,7 @@ class MainManager:
         self.connexion = mqtt.Client("BluePy")
         self.connexion.username_pw_set(self.config['user'], self.config['password'])
         if 'ca_cert' in self.config:
-            self.connexion.tls_set(ca_certs=self.config['ca_cert'], cert_reqs=ssl.VERIFY_DEFAULT)
+            self.connexion.tls_set(ca_certs=self.config['ca_cert'])
             print("MQTT Encryption is enabled ! Good boy :3")
         self.connexion.reconnect_delay_set()
         self.connexion.on_connect = self.on_connect
