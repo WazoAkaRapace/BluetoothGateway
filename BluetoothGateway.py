@@ -3,6 +3,7 @@ from bluepy import btle
 import json
 import BluetoothGateway.components.awox as awox
 import BluetoothGateway.components.xiaomiht as xiaomi
+import BluetoothGateway.components.yeelight.yeelightCandela as yee_Candela
 import time
 import ssl
 
@@ -90,10 +91,13 @@ class MainManager:
     def initialize_devices(self):
         if 'devices' in self.config:
             for device in self.config['devices']:
+                print(device['type'])
                 if device['type'] == "xiaomiht":
                     self.deviceList.append(xiaomi.XiaomiHT(device['mac'], self.connexion, device['refresh']))
                 elif device['type'] == "awoxaroma":
                     self.deviceList.append(awox.MqttAroma(device['mac'], self.connexion))
+                elif device['type'] == "yeelightcandela":
+                    self.deviceList.append(yee_Candela.yeelight_candela(device['mac'], self.connexion))
         else:
             print("No devices, no Gateway.")
             exit(0)
